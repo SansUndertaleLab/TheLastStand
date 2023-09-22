@@ -6,6 +6,19 @@ class UI:
     def __init__(self):
         self.elements = []
 
+    def render(self):
+        for i in self.elements:
+            i.render()
+
+    def addElement(self, element):
+        self.elements.append(element)
+
+    def get_id(self, element):
+        for i, v in enumerate(self.elements):
+            if element is v:
+                return i
+        return None
+
 class UIElement:
     def __init__(self, position, display):
         self.position = position

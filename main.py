@@ -1,4 +1,4 @@
-from UI import Label
+from UI import UI, Label
 import sys
 import pygame
 
@@ -13,7 +13,9 @@ menu_font = pygame.font.SysFont("calibri", 50)
 
 i = 0
 
-title = Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", title_font)
+ui = UI()
+
+ui.addElement(Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", title_font))
 game_version = "0.0.0.1"
 
 while True:
@@ -24,12 +26,14 @@ while True:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             keys = pygame.key.get_pressed()
+            if keys[pygame.K_c]:
+                pygame.quit()
+                sys.exit()
 
     menu_buttons = [
         "New World",
         "Continue World"
     ]
-
-    title.render()
     
+    ui.render()
     pygame.display.update()
