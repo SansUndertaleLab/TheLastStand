@@ -1,6 +1,6 @@
-from pygame import font
+import pygame
 
-font.init()
+pygame.font.init()
 
 class UI:
     def __init__(self):
@@ -47,50 +47,57 @@ class UIElement:
         pass
 
 class Label(UIElement):
-    def __init__(self, position, display, text, font, color = (255, 255, 255)):
+    def __init__(self, position, display, text, font, color = (255, 255, 255), background_color = None):
         super().__init__(position, display)
         self.text = text
         self.font = font
         self.color = color
+        self.background_color = background_color
 
     def center_X(self):
-        size = font.Font.size(self.font, self.text)[0]
+        size = pygame.font.Font.size(self.font, self.text)[0]
         self.position = (self.display.get_width() // 2 - size // 2, self.position[1])
         return self
 
     def get_size(self):
-        return font.Font.size(self.font, self.text)
+        return pygame.font.Font.size(self.font, self.text)
 
     def center_Y(self):
-        size = font.Font.size(self.font, self.text)[1]
+        size = pygame.font.Font.size(self.font, self.text)[1]
         self.position = (self.position[0], self.display.get_height() // 2 - size // 2)
         return self
 
     def center(self):
-        size = font.Font.size(self.font, self.text)
+        size = pygame.font.Font.size(self.font, self.text)
         self.position = (self.display.get_width() // 2 - size[0] // 2, self.display.get_height() // 2 - size[1] // 2)
         return self
     
     def centered_X(self):
-        size = font.Font.size(self.font, self.text)[1]
+        size = pygame.font.Font.size(self.font, self.text)[1]
         return (self.position[0], self.display.get_height() // 2 - size // 2)
 
     def centered_Y(self):
-        size = font.Font.size(self.font, self.text)[1]
+        size = pygame.font.Font.size(self.font, self.text)[1]
         return (self.position[0], self.display.get_height() // 2 - size // 2)
 
     def centered(self):
-        size = font.Font.size(self.font, self.text)
+        size = pygame.font.Font.size(self.font, self.text)
         return (self.display.get_width() // 2 - size[0] // 2, self.display.get_height() // 2 - size[1] // 2)
 
+    def get_borders(self):
+        size = self.get_size()
+        return [*self.position, *(self.position[0] + size[0], self.position[1] + size[1])]
+        
     def render(self):
+        if self.background_color is not None:
+            pygame.draw.rect(self.display, self.background_color, pygame.Rect(*self.position, *self.get_size()))
         current_render = self.font.render(self.text, True, self.color)
         self.display.blit(current_render, self.position)
         return self
     
 class Button(Label):
-    def __init__(self, position, display, text, font, color = (255, 255, 255)):
-        super().__init__(position, display, text, font, color)
+    def __init__(self, position, display, text, font, color = (255, 255, 255), background_color = (0, 0, 0)):
+        super().__init__(position, display, text, font, color, background_color)
         self.subscribed_functions = []
         self.debounce = False
 
@@ -109,8 +116,7 @@ class Button(Label):
             i()
 
     def check_overlap(self, position):
-        size = self.get_size()
-        borders = [*self.position, *(self.position[0] + size[0], self.position[1] + size[1])]
+        borders = self.get_borders()
 
         if position[0] > borders[0] and position[0] < borders[2] and position[1] > borders[1] and position[1] < borders[3]:
             return True

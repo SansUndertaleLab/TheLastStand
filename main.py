@@ -20,7 +20,7 @@ ui.addElement(Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", titl
 game_version = "0.0.0.1"
 
 print_c = lambda msg : (lambda : print(msg))
-test_button = Button((50, 50), display, "e", title_font).subscribe(print_c("test"))
+test_button = Button((50, 50), display, "e", title_font, (255, 255, 255), (200, 200, 200)).subscribe(print_c("test"))
 
 ui.addElement(test_button)
 
