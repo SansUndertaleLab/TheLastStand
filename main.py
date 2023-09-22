@@ -15,14 +15,14 @@ mini_font = pygame.font.SysFont("calibri", 20)
 
 i = 0
 
-ui = UI()
+main_menu_ui = UI()
 
-ui.addElement(Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", title_font))
+main_menu_ui.addElement(Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", title_font))
 game_version = "0.0.0.1"
 
 print_c = lambda msg : (lambda : print(msg))
 
-ui.addElement(Label((0, display.get_height() - 20), display, game_version, mini_font))
+main_menu_ui.addElement(Label((0, display.get_height() - 20), display, game_version, mini_font))
 
 while True:
     display.fill((0, 0, 0))
@@ -37,8 +37,8 @@ while True:
                 sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_clicked_pos = pygame.mouse.get_pos()
-            ui.clicked(mouse_clicked_pos)
+            main_menu_ui.clicked(mouse_clicked_pos)
     
-    ui.update_buttons()
-    ui.render()
+    main_menu_ui.update_buttons()
+    main_menu_ui.render()
     pygame.display.update()
