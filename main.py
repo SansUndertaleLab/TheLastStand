@@ -4,7 +4,8 @@ import pygame
 
 pygame.init()
 
-display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+# display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+display= pygame.display.set_mode((300, 300))
 
 pygame.font.init()
 
@@ -18,7 +19,10 @@ ui = UI()
 ui.addElement(Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", title_font))
 game_version = "0.0.0.1"
 
-print_c = lambda msg : print(msg)
+print_c = lambda msg : (lambda : print(msg))
+test_button = Button((50, 50), display, "e", title_font).subscribe(print_c("test"))
+
+ui.addElement(test_button)
 
 while True:
     display.fill((0, 0, 0))
@@ -34,13 +38,7 @@ while True:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_clicked_pos = pygame.mouse.get_pos()
             ui.clicked(mouse_clicked_pos)
-    menu_buttons = [
-        "New World",
-        "Continue World"
-    ]
-
-    for i in menu_buttons:
-        ui.addElement(Button((0, 0), display, "", title_font))
     
+    ui.update_buttons()
     ui.render()
     pygame.display.update()
