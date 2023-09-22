@@ -5,6 +5,7 @@ font.init()
 class UI:
     def __init__(self):
         self.elements = []
+        self.click_pos = None
 
     def render(self):
         for i in self.elements:
@@ -18,6 +19,14 @@ class UI:
             if element is v:
                 return i
         return None
+    
+    def update_buttons(self):
+        for i in self.elements:
+            if isinstance(i, Button):
+                pass
+
+    def clicked(self, position):
+        self.click_pos = position
 
 class UIElement:
     def __init__(self, position, display):
@@ -68,3 +77,23 @@ class Label(UIElement):
         current_render = self.font.render(self.text, True, self.color)
         self.display.blit(current_render, self.position)
         return self
+    
+class Button(Label):
+    def __init__(self, position, display, text, font, color = (255, 255, 255)):
+        super().__init__(position, display, text, font, color)
+        self.subscribed_functions = []
+
+    def subscribe(self, function):
+        self.subscribed_functions.append(function)
+
+    def unsubscribe(self, function):
+        for i, v in enumerate(self.subscribed_functions):
+            if v is function:
+                self.subscribed_functions.pop(i)
+
+    def clicked(self):
+        for i in self.subscribed_functions:
+            i()
+
+    def check_overlap(self):
+        pass
