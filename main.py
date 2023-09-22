@@ -4,13 +4,14 @@ import pygame
 
 pygame.init()
 
-# display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-display= pygame.display.set_mode((300, 300))
+display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+# display= pygame.display.set_mode((300, 300))
 
 pygame.font.init()
 
 title_font = pygame.font.SysFont("timesnewroman", 50)
 menu_font = pygame.font.SysFont("calibri", 50)
+mini_font = pygame.font.SysFont("calibri", 20)
 
 i = 0
 
@@ -20,9 +21,8 @@ ui.addElement(Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", titl
 game_version = "0.0.0.1"
 
 print_c = lambda msg : (lambda : print(msg))
-test_button = Button((50, 50), display, "e", title_font, (255, 255, 255), (200, 200, 200)).subscribe(print_c("test"))
 
-ui.addElement(test_button)
+ui.addElement(Label((0, display.get_height() - 20), display, game_version, mini_font))
 
 while True:
     display.fill((0, 0, 0))
