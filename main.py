@@ -17,7 +17,7 @@ i = 0
 
 main_menu_ui = UI()
 
-main_menu_ui.addElement(Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", title_font))
+main_menu_ui.addElement(Label((0, 0), display, "The Last Stand: Farm, Cure, Survive", title_font).center_X())
 game_version = "0.0.0.1"
 
 print_c = lambda msg : (lambda : print(msg))
